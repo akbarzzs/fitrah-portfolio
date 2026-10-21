@@ -1,5 +1,8 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: akbarzzs/fitrah-portfolio
+  branch: main
+  # (Baris local_backend dan proxy_url nanti dihapus/tidak dipakai saat online)
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
@@ -14,4 +17,4 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Excerpt", name: "excerpt", widget: "text" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Body", name: "body", widget: "markdown" } # <-- Ini nih editor ala Word-nya!
