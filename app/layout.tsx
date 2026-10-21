@@ -1,33 +1,24 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/navbar";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import './globals.css';
+import type { Metadata } from 'next';
+import Navbar from '../components/navbar';
 
 export const metadata: Metadata = {
-  title: "Fitrah Ali Akbar Setiawan",
-  description:
-    "QA Tester specializing in Manual Testing, API Testing, Postman, and Playwright.",
+  title: 'Fitrah Ali Akbar | QA Automation Engineer',
+  description: 'Portfolio of Fitrah Ali Akbar Setiawan',
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
+    <html lang="id" className="scroll-smooth">
+      <body className="bg-slate-50 text-slate-900 antialiased selection:bg-blue-200 flex flex-col min-h-screen">
         <Navbar />
-        {children}
+        <main className="flex-grow">
+          {children}
+        </main>
       </body>
     </html>
   );
