@@ -22,7 +22,7 @@ export default function BlogPage() {
             </p>
 
             <p className="mt-4 text-sm text-slate-500">
-              {post.date}
+              {post.date instanceof Date ? post.date.toLocaleDateString() : String(post.date)}
             </p>
           </div>
         ))}
