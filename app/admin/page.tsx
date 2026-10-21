@@ -1,15 +1,19 @@
+"use client";
+
+import { useEffect } from "react";
+
 export default function AdminPage() {
+  useEffect(() => {
+    // Load Decap CMS script secara dinamis di browser
+    const script = document.createElement("script");
+    script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
   return (
-    <>
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Content Manager</title>
-        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-      </head>
-      <body>
-        <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-      </body>
-    </>
+    <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", background: "#1e293b", color: "#fff", fontFamily: "sans-serif" }}>
+      <h2>Loading Content Manager...</h2>
+    </div>
   );
 }
