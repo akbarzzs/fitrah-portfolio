@@ -29,7 +29,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form name="contact" data-netlify="true" onSubmit={handleSubmit} className="bg-slate-800/50 border border-slate-700 p-8 md:p-10 rounded-2xl relative overflow-hidden">
+    <form name="contact" onSubmit={handleSubmit} className="bg-slate-800/50 border border-slate-700 p-8 md:p-10 rounded-2xl relative overflow-hidden">
       <input type="hidden" name="form-name" value="contact" />
       
       {/* Overlay Animasi Sukses */}
