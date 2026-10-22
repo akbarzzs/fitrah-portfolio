@@ -2,6 +2,9 @@
 title: Cara menjadi Tampan ala Fitrah
 date: 2026-10-21T14:41:00.000+07:00
 ---
+
+![](/images/uploads/images-1-.jpg)
+
 Be urself
 
 ```javascript
@@ -11,6 +14,3 @@ test('basic test', async ({ page }) => {
 await page.goto('https://playwright.dev/');
 });
 ```
-
-
-![](/images/uploads/images-1-.jpg)
