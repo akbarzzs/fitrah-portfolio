@@ -11,3 +11,6 @@ test('basic test', async ({ page }) => {
 await page.goto('https://playwright.dev/');
 });
 ```
+
+
+![](/images/uploads/images-1-.jpg)
