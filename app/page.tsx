@@ -5,6 +5,7 @@ import matter from 'gray-matter';
 import ContactForm from '../components/contactform';
 import FadeUp from '../components/fadeup';
 import FeaturedBlogGrid from '../components/featuredbloggrid';
+import TechMarquee from '../components/techmarquee';
 
 export default async function Home() {
   const blogDir = path.join(process.cwd(), 'content/blog');
@@ -20,39 +21,75 @@ export default async function Home() {
       };
     })
     .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
-    .slice(0, 4); // Kita ambil 4 artikel biar pas (1 gede di atas, 3 kecil di bawah)
+    .slice(0, 4);
 
   return (
     <div className="text-slate-900 bg-white overflow-hidden">
-      {/* 1. HERO SECTION */}
-      <section className="pt-32 pb-24 md:pt-40 md:pb-32 px-6">
-        <FadeUp>
-          <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
-            <div className="inline-block mb-8 px-5 py-2 rounded-full border border-slate-200 text-slate-600 font-medium text-sm tracking-wide bg-slate-50 shadow-sm hover:shadow-md transition-shadow">
-              Menerima Kesempatan Proyek & Kolaborasi
-            </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.15] max-w-4xl">
-              Kualitas Software Anda, <br className="hidden md:block" />
-              <span className="text-blue-600">Prioritas Utama Kami.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-500 mb-12 max-w-2xl leading-relaxed">
-              Membantu perusahaan memastikan aplikasi bebas <span className="italic font-medium">bug</span>, aman, dan berkinerja tinggi melalui otomatisasi pengujian terstandarisasi.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link href="#contact" className="px-8 py-4 bg-slate-900 text-white font-medium rounded-lg hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-600/30 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group">
-                Mulai Konsultasi
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-              </Link>
-              <Link href="#services" className="px-8 py-4 bg-white text-slate-900 font-medium rounded-lg border border-slate-200 hover:border-slate-400 hover:bg-slate-50 transition-all duration-300 flex items-center justify-center">
-                Pelajari Layanan
-              </Link>
-            </div>
+      
+      {/* 1. HERO SECTION (Split Layout + Grid Pattern) */}
+      <section className="relative pt-24 pb-20 md:pt-40 md:pb-32 px-6 min-h-[90vh] flex items-center">
+        {/* Background Grid Pattern Tipis */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        
+        <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-12 items-center relative z-10">
+          
+          {/* Kiri: Teks */}
+          <div className="md:col-span-7 flex flex-col items-start text-left">
+            <FadeUp>
+              <div className="inline-block mb-6 px-4 py-1.5 rounded-full border border-blue-200 text-blue-700 font-semibold text-sm tracking-wide bg-blue-50 shadow-sm">
+                Menerima Kesempatan Proyek & Kolaborasi
+              </div>
+              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]">
+                Kualitas Software Anda, <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Prioritas Utama.</span>
+              </h1>
+              <p className="text-lg md:text-xl text-slate-500 mb-10 max-w-xl leading-relaxed">
+                Membantu perusahaan memastikan aplikasi bebas <span className="italic font-medium">bug</span>, aman, dan berkinerja tinggi melalui otomatisasi pengujian terstandarisasi.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <Link href="#contact" className="px-8 py-4 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/30 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group">
+                  Mulai Konsultasi
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </Link>
+                <Link href="#services" className="px-8 py-4 bg-white text-slate-900 font-medium rounded-lg border border-slate-200 hover:border-slate-400 hover:bg-slate-50 transition-all duration-300 flex items-center justify-center">
+                  Pelajari Layanan
+                </Link>
+              </div>
+            </FadeUp>
           </div>
-        </FadeUp>
+
+          {/* Kanan: Visual Mockup (Ilusi UI) */}
+          <div className="md:col-span-5 hidden md:block relative perspective-1000">
+            <FadeUp delay={200}>
+              <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full"></div>
+              <div className="relative bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-2xl transform rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500">
+                <div className="flex gap-2 mb-6">
+                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+                <div className="space-y-4">
+                  <div className="h-4 bg-slate-800 rounded w-3/4"></div>
+                  <div className="h-4 bg-slate-800 rounded w-full"></div>
+                  <div className="h-4 bg-slate-800 rounded w-5/6"></div>
+                  <div className="h-4 bg-slate-800 rounded w-full"></div>
+                  <div className="flex gap-4 pt-4 mt-4 border-t border-slate-800">
+                    <div className="h-8 bg-blue-600 rounded w-1/3"></div>
+                    <div className="h-8 bg-slate-700 rounded w-1/4"></div>
+                  </div>
+                </div>
+              </div>
+            </FadeUp>
+          </div>
+
+        </div>
       </section>
 
+      {/* Infinite Tech Stack Marquee */}
+      <TechMarquee />
+
       {/* 2. SERVICES SECTION */}
-      <section id="services" className="py-24 bg-slate-50 border-y border-slate-100">
+      <section id="services" className="py-24 bg-slate-50 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-6">
           <FadeUp delay={100}>
             <div className="mb-16 md:flex md:justify-between md:items-end">
@@ -122,7 +159,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 4. LATEST BLOG SECTION (Udah pakai Featured Layout!) */}
+      {/* 4. LATEST BLOG SECTION */}
       <section id="latest-blog" className="py-24 bg-slate-50 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-6">
           <FadeUp>
@@ -138,7 +175,6 @@ export default async function Home() {
             </div>
           </FadeUp>
 
-          {/* Di sini Grid Lamanya kita panggil dari komponen baru */}
           <FeaturedBlogGrid posts={recentPosts} />
         </div>
       </section>

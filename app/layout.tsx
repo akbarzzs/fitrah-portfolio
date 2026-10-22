@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import Navbar from '../components/navbar';
 import BackToTop from '../components/backtotop';
+import CustomCursor from '../components/customcursor';
 
 export const metadata: Metadata = {
   title: 'Fitrah Ali Akbar | QA Automation Engineer',
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Fitrah Ali Akbar | QA Automation Engineer',
     description: 'Spesialis Quality Assurance dan Automation Testing. Mari tingkatkan kualitas software Anda.',
-    url: 'https://fitrah-porto.netlify.app', // Ganti dengan domain asli lu nanti
+    url: 'https://fitrah-porto.netlify.app',
     siteName: 'Fitrah Ali Akbar Portfolio',
     locale: 'id_ID',
     type: 'website',
@@ -23,7 +24,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className="scroll-smooth" data-scroll-behavior="smooth">
-      <body className="font-sans bg-white text-slate-900 antialiased selection:bg-blue-200 flex flex-col min-h-screen">
+      <body className="font-sans bg-white text-slate-900 antialiased selection:bg-blue-200 flex flex-col min-h-screen cursor-auto lg:cursor-none">
+        <CustomCursor />
         <Navbar />
         <main className="flex-grow">
           {children}
