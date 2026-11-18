@@ -1,4 +1,3 @@
-'use client';
 import Link from 'next/link';
 import type { BlogPostSummary } from '../lib/blog';
 import { formatDate } from '../lib/date';

@@ -14,8 +14,21 @@ Run the production checks with:
 ```bash
 npm run lint
 npx tsc --noEmit
+npm test
 npm run build
 ```
+
+## Project structure
+
+- `app/` owns route entrypoints, route metadata, global styles, and generated SEO routes.
+- `components/home/` contains the homepage sections; `components/` contains UI shared across routes.
+- `lib/` contains server-side content access and small site utilities. Keep route rendering in `app/` and reusable presentation in components.
+- `content/blog/` is the Markdown source of truth for articles. Validate content behavior with `npm test`.
+- `proxy.ts` returns a real HTTP 404 for unknown blog slugs; it is needed because streamed not-found pages can otherwise return HTTP 200.
+- `public/admin/` contains the static Decap CMS entrypoint and configuration; `public/` contains files served as-is.
+- `next.config.ts` owns legacy URL redirects and response security headers.
+
+When adding homepage content, put the section in `components/home/` and pass the selected language as a prop. Keep both language dictionaries in `lib/dictionary.ts` aligned by key.
 
 ## Language and navigation
 

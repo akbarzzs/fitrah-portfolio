@@ -18,6 +18,30 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    return [
+      {
+        source: '/admin',
+        destination: '/admin/index.html',
+        permanent: false,
+      },
+      {
+        source: '/admin/',
+        destination: '/admin/index.html',
+        permanent: false,
+      },
+      {
+        source: '/blog/cara-menjadi-tampan-ala-fitrah',
+        destination: '/blog/pemetaan-proses-bisnis-untuk-sop',
+        permanent: true,
+      },
+      {
+        source: '/blog/first-post',
+        destination: '/blog/manfaat-sop-operasional',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     const isDevelopment = process.env.NODE_ENV !== 'production';
     const appContentSecurityPolicy = [
