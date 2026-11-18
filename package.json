@@ -10,9 +10,8 @@
   },
   "dependencies": {
     "@netlify/plugin-nextjs": "^5.16.4",
-    "decap-cms-app": "^3.17.1",
     "gray-matter": "^4.0.3",
-    "next": "16.4.2",
+    "next": "16.4.6",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-markdown": "^10.1.0",
@@ -28,9 +27,17 @@
     "@types/react-dom": "^19",
     "autoprefixer": "^10.6.1",
     "eslint": "^9",
-    "eslint-config-next": "16.4.2",
+    "eslint-config-next": "16.4.6",
     "postcss": "^8.5.31",
     "tailwindcss": "^4.3.3",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "^6.1.5"
+    },
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "^11.0.1"
+    }
   }
 }

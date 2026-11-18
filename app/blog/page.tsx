@@ -1,35 +1,59 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
 import BlogSearch from '../../components/blogsearch';
+import { dictionary } from '../../lib/dictionary';
+import { getAllPosts } from '../../lib/blog';
+import { localizedUrl } from '../../lib/site';
 
-export default function BlogList() {
-  const blogDir = path.join(process.cwd(), 'content/blog');
-  const files = fs.existsSync(blogDir) ? fs.readdirSync(blogDir) : [];
+export const instant = false;
 
-  const posts = files
-    .map(filename => {
-      const fileContent = fs.readFileSync(path.join(blogDir, filename), 'utf-8');
-      const { data: frontmatter } = matter(fileContent);
-      return {
-        slug: filename.replace('.md', ''),
-        frontmatter,
-      };
-    })
-    .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
+type Props = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export async function generateMetadata({ searchParams }: Props) {
+  const resolvedParams = await searchParams;
+  const currentLang = resolvedParams?.lang === 'en' ? 'en' : 'id';
+  const { title, desc } = dictionary[currentLang].blogPage;
+  const url = localizedUrl('/blog', currentLang);
+
+  return {
+    title,
+    description: desc,
+    alternates: {
+      canonical: url,
+      languages: {
+        id: localizedUrl('/blog', 'id'),
+        en: localizedUrl('/blog', 'en'),
+      },
+    },
+    openGraph: {
+      title,
+      description: desc,
+      url,
+      siteName: 'Konsultan SOP & Job Description',
+      locale: currentLang === 'en' ? 'en_US' : 'id_ID',
+      type: 'website' as const,
+    },
+  };
+}
+
+export default async function BlogList({ searchParams }: Props) {
+  const resolvedParams = await searchParams;
+  const currentLang = resolvedParams?.lang === 'en' ? 'en' : 'id';
+  const t = dictionary[currentLang].blogPage;
+
+  const posts = getAllPosts();
 
   return (
-    <div className="bg-white min-h-screen pt-32 pb-24">
+    <div className="bg-slate-50 min-h-screen pt-20 md:pt-24 pb-20 md:pb-24">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="max-w-2xl mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">Insight & Artikel</h1>
-          <p className="text-lg text-slate-500 leading-relaxed">
-            Eksplorasi mendalam seputar Quality Assurance, otomatisasi pengujian, dan praktik terbaik dalam rekayasa perangkat lunak.
+        <div className="max-w-2xl mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">{t.title}</h1>
+          <p className="text-lg text-slate-600 leading-relaxed">
+            {t.desc}
           </p>
         </div>
         
-        {/* Panggil komponen pencarian interaktif di sini */}
-        <BlogSearch posts={posts} />
+        <BlogSearch posts={posts} lang={currentLang} />
       </div>
     </div>
   );

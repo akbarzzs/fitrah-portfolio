@@ -1,17 +1,20 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import Navbar from '../components/navbar';
-import BackToTop from '../components/backtotop';
-import CustomCursor from '../components/customcursor';
+import FloatingWA from '../components/floatingwa';
+import { siteUrl } from '../lib/site';
 
 export const metadata: Metadata = {
-  title: 'Fitrah Ali Akbar | QA Automation Engineer',
-  description: 'Portfolio profesional Fitrah Ali Akbar. Membantu perusahaan memastikan kualitas aplikasi bebas bug melalui otomatisasi pengujian.',
+  metadataBase: siteUrl,
+  title: {
+    default: 'Konsultan SOP & Job Description Perusahaan',
+    template: '%s | Fitrah Ali Akbar',
+  },
+  description: 'Hentikan ketergantungan operasional bisnis pada figur tertentu. Layanan jasa pembuatan SOP, audit proses bisnis, dan sistem operasional oleh eks-Director HR Hotel Bintang 5.',
   openGraph: {
-    title: 'Fitrah Ali Akbar | QA Automation Engineer',
-    description: 'Spesialis Quality Assurance dan Automation Testing. Mari tingkatkan kualitas software Anda.',
-    url: 'https://fitrah-porto.netlify.app',
-    siteName: 'Fitrah Ali Akbar Portfolio',
+    title: 'Jasa Pembuatan SOP & Sistem Manajemen Perusahaan',
+    description: 'Kami bantu susun SOP terstruktur, praktis, dan siap dieksekusi tim tanpa perlu Anda awasi 24/7.',
+    siteName: 'Konsultan SOP & Job Description',
     locale: 'id_ID',
     type: 'website',
   },
@@ -24,13 +27,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className="scroll-smooth" data-scroll-behavior="smooth">
-      <body className="font-sans bg-white text-slate-900 antialiased selection:bg-blue-200 flex flex-col min-h-screen cursor-auto lg:cursor-none">
-        <CustomCursor />
+      <body className="font-sans bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">
           {children}
         </main>
-        <BackToTop />
+        <FloatingWA />
       </body>
     </html>
   );

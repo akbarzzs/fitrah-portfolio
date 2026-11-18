@@ -1,44 +1,68 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import { remark } from "remark";
-import html from "remark-html";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
 
-const postsDirectory = path.join(process.cwd(), "content/blog");
+const postsDirectory = path.join(process.cwd(), 'content', 'blog');
 
-export function getAllPosts() {
-  const fileNames = fs.readdirSync(postsDirectory);
+export type BlogPostSummary = {
+  slug: string;
+  frontmatter: {
+    title: string;
+    date: string;
+    excerpt?: string;
+    category?: string;
+  };
+};
 
-  return fileNames.map((fileName) => {
-    const slug = fileName.replace(".md", "");
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data } = matter(fileContents);
+export type BlogPost = BlogPostSummary & {
+  content: string;
+};
 
-    return {
-      slug,
-      title: data.title,
-      date: data.date,
-      excerpt: data.excerpt,
-    };
-  });
+function normalizeDate(value: unknown): string {
+  if (!(value instanceof Date) && typeof value !== 'string') return '';
+
+  const date = value instanceof Date ? value : new Date(value);
+  return Number.isNaN(date.getTime()) ? '' : date.toISOString();
 }
 
-// Fungsi ini kita ubah jadi async karena remark butuh waktu buat ngerender
-export async function getPostBySlug(slug: string) {
-  const fullPath = path.join(postsDirectory, `${slug}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  
-  const { data, content } = matter(fileContents);
+function readPost(slug: string): BlogPost | null {
+  if (!/^[\w-]+$/.test(slug)) return null;
 
-  // Proses teks markdown mentah menjadi HTML
-  const processedContent = await remark().use(html).process(content);
-  const contentHtml = processedContent.toString();
+  const fullPath = path.join(postsDirectory, `${slug}.md`);
+  if (!fs.existsSync(fullPath)) return null;
+
+  const { data, content } = matter(fs.readFileSync(fullPath, 'utf8'));
+  const metadata = data as Record<string, unknown>;
+  const title = typeof metadata.title === 'string' ? metadata.title : slug;
+  const excerpt = typeof metadata.excerpt === 'string' ? metadata.excerpt : undefined;
+  const category = typeof metadata.category === 'string' ? metadata.category : undefined;
 
   return {
     slug,
-    title: data.title,
-    date: data.date,
-    contentHtml, // Sekarang yang kita kirim adalah HTML, bukan teks mentah lagi
+    frontmatter: {
+      title,
+      date: normalizeDate(metadata.date),
+      ...(excerpt ? { excerpt } : {}),
+      ...(category ? { category } : {}),
+    },
+    content,
   };
+}
+
+export function getAllPosts(): BlogPostSummary[] {
+  return fs
+    .readdirSync(postsDirectory)
+    .filter((fileName) => fileName.endsWith('.md'))
+    .map((fileName) => readPost(fileName.slice(0, -3)))
+    .filter((post): post is BlogPost => post !== null)
+    .map(({ slug, frontmatter }) => ({ slug, frontmatter }))
+    .sort((a, b) => {
+      const dateDifference =
+        (Date.parse(b.frontmatter.date) || 0) - (Date.parse(a.frontmatter.date) || 0);
+      return dateDifference || a.slug.localeCompare(b.slug);
+    });
+}
+
+export function getPostBySlug(slug: string): BlogPost | null {
+  return readPost(slug);
 }

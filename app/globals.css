@@ -2,9 +2,57 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --animate-marquee: marquee 30s linear infinite;
-  --keyframes-marquee: {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  };
+  --color-blue-50: #f1f5f9;
+  --color-blue-100: #e2e8f0;
+  --color-blue-200: #cbd5e1;
+  --color-blue-300: #94a3b8;
+  --color-blue-400: #647d96;
+  --color-blue-500: #365d80;
+  --color-blue-600: #23486b;
+  --color-blue-700: #1c3c5a;
+  --color-blue-800: #18334c;
+  --color-blue-900: #142b40;
+  --color-blue-950: #0d1d2c;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    background: #f8fafc;
+    color: #1e293b;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: #f8fafc;
+    color: #1e293b;
+  }
+
+  button,
+  input,
+  textarea {
+    font: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid #365d80;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: #d7e2ec;
+    color: #142b40;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
