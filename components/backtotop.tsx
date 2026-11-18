@@ -1,8 +1,12 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { dictionary } from '../lib/dictionary';
 
-export default function BackToTop() {
+function BackToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
+  const searchParams = useSearchParams();
+  const currentLang = searchParams.get('lang') === 'en' ? 'en' : 'id';
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -23,10 +27,18 @@ export default function BackToTop() {
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed bottom-8 right-8 p-3.5 rounded-full bg-blue-600 text-white shadow-xl hover:bg-blue-700 hover:-translate-y-1 transition-all duration-300 z-50 ${isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
-      aria-label="Kembali ke atas"
+      className={`fixed bottom-24 right-6 p-3 rounded-md bg-blue-700 text-white shadow-md hover:bg-blue-800 transition-colors duration-200 z-50 ${isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+      aria-label={dictionary[currentLang].backToTop}
     >
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 15l7-7 7 7"></path></svg>
     </button>
+  );
+}
+
+export default function BackToTop() {
+  return (
+    <Suspense fallback={null}>
+      <BackToTopButton />
+    </Suspense>
   );
 }

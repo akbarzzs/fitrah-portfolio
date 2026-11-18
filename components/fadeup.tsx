@@ -26,8 +26,8 @@ export default function FadeUp({ children, delay = 0 }: { children: React.ReactN
   return (
     <div
       ref={domRef}
-      className={`transition-all duration-1000 ease-out ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+      className={`transition-all duration-500 ease-out ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
       }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
