@@ -92,6 +92,7 @@ function NavbarContent() {
             type="button"
             className="relative inline-flex items-center bg-slate-100 border border-slate-200 rounded-md p-1 w-20 h-9 transition-colors hover:border-slate-300"
             aria-label={t.switchLanguage}
+            aria-pressed={currentLang === 'en'}
           >
             {/* Sliding Pill Indicator */}
             <span
@@ -117,14 +118,24 @@ function NavbarContent() {
           <Link onClick={() => setMenuOpen(false)} href={`/?lang=${currentLang}#experience`} className="py-2 hover:text-blue-700">{t.experience}</Link>
           <Link onClick={() => setMenuOpen(false)} href={`/blog?lang=${currentLang}`} className="py-2 hover:text-blue-700">{t.blog}</Link>
           <Link onClick={() => setMenuOpen(false)} href={`/?lang=${currentLang}#contact`} className="py-2 hover:text-blue-700">{t.contact}</Link>
-          <button
-            type="button"
-            onClick={toggleLanguage}
-            className="self-start mt-2 px-4 py-2 rounded-md bg-slate-100 border border-slate-200 text-slate-700 hover:border-slate-300"
-            aria-label={t.switchLanguage}
-          >
-            {currentLang === 'id' ? 'ID | EN' : 'EN | ID'}
-          </button>
+          <div role="group" aria-label={t.switchLanguage} className="self-start mt-2 inline-flex rounded-md border border-slate-200 bg-slate-100 p-1">
+            <button
+              type="button"
+              onClick={() => currentLang !== 'id' && toggleLanguage()}
+              aria-pressed={currentLang === 'id'}
+              className={`min-w-11 rounded px-3 py-2 text-xs font-semibold transition-colors ${currentLang === 'id' ? 'bg-blue-700 text-white' : 'text-slate-600 hover:text-slate-900'}`}
+            >
+              ID
+            </button>
+            <button
+              type="button"
+              onClick={() => currentLang !== 'en' && toggleLanguage()}
+              aria-pressed={currentLang === 'en'}
+              className={`min-w-11 rounded px-3 py-2 text-xs font-semibold transition-colors ${currentLang === 'en' ? 'bg-blue-700 text-white' : 'text-slate-600 hover:text-slate-900'}`}
+            >
+              EN
+            </button>
+          </div>
         </div>
       </div>
     </nav>
