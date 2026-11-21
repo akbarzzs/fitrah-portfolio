@@ -1,5 +1,5 @@
 export const siteUrl = new URL(
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://fitrah-porto.netlify.app',
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://konsultan-sop-job-description.netlify.app',
 );
 
 export function localizedUrl(pathname: string, lang: 'id' | 'en'): string {
